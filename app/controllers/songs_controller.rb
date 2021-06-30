@@ -20,7 +20,7 @@ class SongsController < ApplicationController
 
     post "/songs" do
         artist=Artist.find_by(name: params[:artist][:name])
-        params[:artist_id]=artist.id
+        params[:song][:artist_id]=artist.id
         song=Song.create(params[:song])
         if(params[:genres]!=nil)
             params[:genres].each{
