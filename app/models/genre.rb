@@ -1,6 +1,6 @@
 class Genre < ActiveRecord::Base
-    has_many :songGenres
-    has_many :songs, through: :songGenres
+    has_many :song_genres
+    has_many :songs, through: :song_genres
     has_many :artists, through: :songs
 
     def slug 
