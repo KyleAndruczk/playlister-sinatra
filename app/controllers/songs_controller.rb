@@ -10,6 +10,12 @@ class SongsController < ApplicationController
     end
 
     patch "/songs/:slug/edit" do
+          #get params from url
+        @song = Song.find(params[:id]) 
+
+        
+        @song.assign_attributes(params[:song]) 
+
 
     end
 
