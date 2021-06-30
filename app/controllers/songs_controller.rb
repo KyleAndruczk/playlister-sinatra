@@ -14,13 +14,28 @@ class SongsController < ApplicationController
     end
 
     patch "/songs/:slug/edit" do
-          #get params from url
-        @song = Song.find(params[:id]) 
+        song=Song.find(params[:id])
+        artist=Artist.find_by(name: params[:artist][:name])
+        if(artist==nil)
+            artist=Artist.create(params[:artist])
+        end
+        #binding.pry
+        params[:song][:artist_id]=artist.id
+        song.update(params[:song])
+        if(params[:genres]!=nil)
+            params[:genres].each{
+                |genre|
+                SongGenre.create(song_id: song.id, genre_id: genre[:id])
+            }
+        end
+        flash[:message] = "Successfully created song."
 
-        
-        @song.assign_attributes(params[:song]) 
+        redirect "/songs/#{song.slug}"
+    end
 
-
+    get "/songs/:slug/edit" do
+        @song=Song.find_by_slug(params[:slug])
+        erb :"songs/edit"
     end
 
     get "/songs/:slug" do
