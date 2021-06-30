@@ -31,7 +31,7 @@ class SongsController < ApplicationController
                 SongGenre.create(song_id: song.id, genre_id: genre[:id])
             }
         end
-        flash[:message] = "Successfully created song."
+        flash[:message] = "Successfully updated song."
 
         
 
