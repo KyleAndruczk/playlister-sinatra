@@ -22,10 +22,12 @@ class SongsController < ApplicationController
         #binding.pry
         params[:song][:artist_id]=artist.id
         song.update(params[:song])
+        
         if(params[:genres]!=nil)
             params[:genres].each{
                 |genre|
-                SongGenre.create(song_id: song.id, genre_id: genre[:id])
+                exist=SongGenre.find(song_id: song.id, genre_id: genre[:id])
+                
             }
         end
         flash[:message] = "Successfully created song."
@@ -35,6 +37,7 @@ class SongsController < ApplicationController
 
     get "/songs/:slug/edit" do
         @song=Song.find_by_slug(params[:slug])
+        @genres=Genre.all
         erb :"songs/edit"
     end
 
