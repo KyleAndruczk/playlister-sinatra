@@ -14,4 +14,15 @@ class SongsController < ApplicationController
         erb :"songs/show"
     end
 
+    post "/songs" do
+        song=Song.create(params[:song])
+        params[:genres].each{
+            |genre|
+            SongGenre.create(song_id: song.id, genre_id: genre[:id])
+        }
+
+        redirect "/songs"
+    end
+
+
 end
