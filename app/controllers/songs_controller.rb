@@ -14,23 +14,20 @@ class SongsController < ApplicationController
     end
 
     patch "/songs" do
-        song=Song.find(params[:id])
-        #binding.pry
-        artist=Artist.find_by(name: params[:artist][:name])
-        if(artist==nil)
-            artist=Artist.create(params[:artist])
+        song = Song.find(params[:id])
+
+        artist = Artist.find_by(name: params[:artist][:name])
+        if (artist == nil)
+            artist = Artist.create(params[:artist])
         end
-        #binding.pry
-        params[:song][:artist_id]=artist.id
+
+        params[:song][:artist_id] = artist.id
         song.update(params[:song])
-        #binding.pry
+
         SongGenre.where(song_id: song.id).destroy_all()
 
-        if(params[:genres]!=nil)
-            params[:genres].each{
-                |genre|
-                SongGenre.create(song_id: song.id, genre_id: genre[:id])
-            }
+        if (params[:genres]!= nil)
+            params[:genres].each{ |genre| SongGenre.create(song_id: song.id, genre_id: genre[:id]) }
         end
         flash[:message] = "Successfully updated song."
 
@@ -49,18 +46,15 @@ class SongsController < ApplicationController
     end
 
     post "/songs" do
-        artist=Artist.find_by(name: params[:artist][:name])
-        if(artist==nil)
-            artist=Artist.create(params[:artist])
+        artist = Artist.find_by(name: params[:artist][:name])
+        if (artist == nil)
+            artist = Artist.create(params[:artist])
         end
-        #binding.pry
-        params[:song][:artist_id]=artist.id
-        song=Song.create(params[:song])
-        if(params[:genres]!=nil)
-            params[:genres].each{
-                |genre|
-                SongGenre.create(song_id: song.id, genre_id: genre[:id])
-            }
+
+        params[:song][:artist_id] = artist.id
+        song = Song.create(params[:song])
+        if (params[:genres]!=nil)
+            params[:genres].each{ |genre| SongGenre.create(song_id: song.id, genre_id: genre[:id]) }
         end
         flash[:message] = "Successfully created song."
 
