@@ -23,11 +23,12 @@ class SongsController < ApplicationController
         params[:song][:artist_id]=artist.id
         song.update(params[:song])
         
+        SongGenre.destroy_all(song_id: song.id)
+
         if(params[:genres]!=nil)
             params[:genres].each{
                 |genre|
-                exist=SongGenre.find(song_id: song.id, genre_id: genre[:id])
-                
+                SongGenre.create(song_id: song.id, genre_id: genre[:id])
             }
         end
         flash[:message] = "Successfully created song."
