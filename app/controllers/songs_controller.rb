@@ -13,8 +13,9 @@ class SongsController < ApplicationController
         erb :"songs/new"
     end
 
-    patch "/songs/:slug/edit" do
+    patch "/songs" do
         song=Song.find(params[:id])
+        #binding.pry
         artist=Artist.find_by(name: params[:artist][:name])
         if(artist==nil)
             artist=Artist.create(params[:artist])
@@ -22,8 +23,8 @@ class SongsController < ApplicationController
         #binding.pry
         params[:song][:artist_id]=artist.id
         song.update(params[:song])
-        
-        SongGenre.destroy_all(song_id: song.id)
+        #binding.pry
+        SongGenre.where(song_id: song.id).destroy_all()
 
         if(params[:genres]!=nil)
             params[:genres].each{
@@ -31,9 +32,7 @@ class SongsController < ApplicationController
                 SongGenre.create(song_id: song.id, genre_id: genre[:id])
             }
         end
-        flash[:message] = "Successfully created song."
-
-        
+        flash[:message] = "Successfully updated song."
 
         redirect "/songs/#{song.slug}"
     end
