@@ -3,6 +3,8 @@
     <label for="song[name]">Song name: </label>
     <input type="text" name="song[name]">
     <br>
+    <label for="artist[name]">Artist name: </label>
+    <input type="text" name="artist[name]">
     <br>
     <%@genres.each do |genre|%>
             <label for="song[genres][][id]"> <%=genre.name%>:</label>
