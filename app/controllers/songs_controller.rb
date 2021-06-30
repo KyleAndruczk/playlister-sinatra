@@ -26,7 +26,7 @@ class SongsController < ApplicationController
 
         SongGenre.where(song_id: song.id).destroy_all()
 
-        if (params[:genres]!= nil)
+        if (params[:genres] != nil)
             params[:genres].each{ |genre| SongGenre.create(song_id: song.id, genre_id: genre[:id]) }
         end
         flash[:message] = "Successfully updated song."
@@ -53,7 +53,7 @@ class SongsController < ApplicationController
 
         params[:song][:artist_id] = artist.id
         song = Song.create(params[:song])
-        if (params[:genres]!=nil)
+        if (params[:genres] != nil)
             params[:genres].each{ |genre| SongGenre.create(song_id: song.id, genre_id: genre[:id]) }
         end
         flash[:message] = "Successfully created song."
