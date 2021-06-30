@@ -5,10 +5,10 @@
     <br>
     <br>
     <%@genres.each do |genre|%>
-            <label for="song[genres][][id]">Song Genres:</label>
-            <input type="checkbox" name="song[genres][][id]" value="checked">
+            <label for="song[genres][][id]"> <%=genre.name%>:</label>
+            <input type="checkbox" name="genres[][id]" value="<%= genre.id %>">
             <br>
     <% end %>
 
-
+    <input type="submit" id="Submit">
 <form>
